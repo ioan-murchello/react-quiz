@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 const Question = ({ question, answer, dispatch }) => {
   const hasAnswered = answer != null;
   const [isClicked, setIsClicked] = useState(false);
+  const disableClickStyles = {'pointer-events': isClicked ? 'none' : 'auto'}
 
   useEffect(() => {
     setIsClicked(false)
@@ -14,12 +15,12 @@ const Question = ({ question, answer, dispatch }) => {
         {question.variants.map((option, i) => {
           return (
             <button
+            style={disableClickStyles}
               onClick={() => {
                 dispatch({ type: 'newAnswer', payload: i });
                 setIsClicked(true);
               }}
-              key={option}
-              disabled={isClicked}
+              key={option} 
               className={`btn btn-option ${
                 hasAnswered ? (i === question.answer ? 'correct' : 'wrong') : ''
               } ${
